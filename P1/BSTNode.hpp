@@ -27,7 +27,27 @@ public:
    ** or 0 if there is none.
    */ // TODO
   BSTNode<Data>* successor() {
+	  BSTNode<Data> *current = this;
+	  if (current->right) {
+		  current = current->right;
+		  while (current->left) {
+			  current = current->left;
+		  }
+		  return current;
+	  }
 
+	  while (current) {
+		  current = this->parent;
+		  if (current) {
+			  if (current->left == this) {
+				  return current;
+			  } else {
+				  current = current->parent;
+			  }
+		  }
+	  }
+
+	  return current;
   }
 
 }; 

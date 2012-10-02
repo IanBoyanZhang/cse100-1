@@ -41,7 +41,40 @@ public:
    *  Data items.
    */ // TODO
   virtual bool insert(const Data& item) {
+	  BSTNode<Data> *node = new BSTNode<Data>(item);
+	  if (this->empty()) {
+		  root = node;
+		  node->parent = 0;
+		  ++isize;
+		  return true;
+	  }
 
+	  BSTNode<Data> *current = this->root;
+	  while (current) {
+		  if (item < current->data) {
+			  // stop before a null node
+			  if (current->left) {
+				  current = current->left;
+			  } else {
+				  ++isize;
+				  node->parent = current;
+				  current->left = node;
+				  return true;
+			  }
+		  } else if (current->data < item) {
+			  // stop before a null node
+			  if (current->right) {
+				  current = current->right;
+			  } else {
+				  ++isize;
+				  node->parent = current;
+				  current->right = node;
+				  return true;
+			  }
+		  } else {
+			  return false;
+		  }
+	  }
   }
 
 
@@ -52,38 +85,56 @@ public:
    *  Data items.
    */ // TODO
   iterator find(const Data& item) const {
+	  if (this->empty()) {
+		  return false;
+	  }
 
+	  BSTNode<Data> *current = this->root;
+	  while (current) {
+		  if (item < current->data) {
+			  current = current->left;
+		  } else if (current->data < item) {
+			  current = current->right;
+		  } else {
+			  break;
+		  }
+	  }
+	  return iterator(current);
   }
 
-  
-  /** Return the number of items currently in the BST.
-   */ // TODO
-  unsigned int size() const {
 
+  /** Return the number of items currently in the BST.
+  */ // TODO
+  unsigned int size() const {
+	  return isize;
   }
 
   /** Return true if the BST is empty, else false.
-   */ // TODO
+  */ // TODO
   bool empty() const {
-
+	  return isize == 0;
   }
 
   /** Return an iterator pointing to the first item in the BST.
-   */ // TODO
+  */ // TODO
   iterator begin() const {
-
+	  BSTNode<Data> *current = this->root;
+	  while (current->left) {
+		  current = current->left;
+	  }
+	  return current;
   }
 
   /** Return an iterator pointing past the last item in the BST.
-   */
+  */
   iterator end() const {
-    return typename BST<Data>::iterator(0);
+	  return typename BST<Data>::iterator(0);
   }
 
   /** Perform an inorder traversal of this BST.
-   */
+  */
   void inorder() const {
-    inorder(root);
+	  inorder(root);
   }
 
 
@@ -91,7 +142,7 @@ private:
 
   /** Recursive inorder traversal 'helper' function */
   void inorder(BSTNode<Data>* n) const {
-    if(n==0) return;
+	  if(n==0) return;
     inorder(n->left);
     std::cout << *n << std::endl;
     inorder(n->right);

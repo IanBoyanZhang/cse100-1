@@ -17,7 +17,7 @@ public:
    *  in this BSTIterator.
    */ // TODO
   BSTIterator(BSTNode<Data>* curr) {
-
+	  this->curr = curr;
   }
 
   /** Dereference operator. */
