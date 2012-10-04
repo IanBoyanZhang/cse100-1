@@ -72,9 +72,10 @@ public:
 				  return true;
 			  }
 		  } else {
-			  return false;
+			  break;
 		  }
 	  }
+	  return false;
   }
 
 

@@ -40,12 +40,12 @@ public:
 
   /** Equality test operator. */ // TODO
   bool operator==(BSTIterator<Data> const & other) const {
-
+	  return this->curr == other.curr;
   }
 
   /** Inequality test operator. */ // TODO
   bool operator!=(BSTIterator<Data> const & other) const {
-
+	  return this->curr != other.curr;
   }
 
 };

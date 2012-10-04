@@ -28,6 +28,7 @@ public:
    */ // TODO
   BSTNode<Data>* successor() {
 	  BSTNode<Data> *current = this;
+	  // continue down the tree until we get the leftmost leaf
 	  if (current->right) {
 		  current = current->right;
 		  while (current->left) {
@@ -36,18 +37,17 @@ public:
 		  return current;
 	  }
 
+	  // go back up the tree
+	  current = current->parent;
 	  while (current) {
-		  current = this->parent;
-		  if (current) {
-			  if (current->left == this) {
-				  return current;
-			  } else {
-				  current = current->parent;
-			  }
+		  if (current->left == this) {
+			  return current;
 		  }
+		  current = current->parent;
 	  }
 
-	  return current;
+	  // no succesor was found
+	  return 0;
   }
 
 }; 
