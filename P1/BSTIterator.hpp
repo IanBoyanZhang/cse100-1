@@ -1,3 +1,6 @@
+// Name: Manh Luong and Kyle So
+// Login: mcluong ksso
+// Student ID: A10269322 A10233937
 #ifndef BSTITERATOR_HPP
 #define BSTITERATOR_HPP
 #include "BSTNode.hpp"
