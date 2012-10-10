@@ -1,3 +1,6 @@
+// Name: Manh Luong and Kyle So
+// Login: mcluong ksso
+// Student ID: A10269322 A10233937
 #ifndef RST_HPP
 #define RST_HPP
 #include "BST.hpp"
