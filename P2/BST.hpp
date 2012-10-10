@@ -12,42 +12,7 @@ class BST {
 
 	protected:
 
-		/** Pointer to the root of this BST, or 0 if the BST is empty */
-		BSTNode<Data>* root;
-
-		/** Number of Data items stored in this BST. */
-		unsigned int isize;
-
-	public:
-
-		/** define iterator as an aliased typename for BSTIterator<Data>. */
-		typedef BSTIterator<Data> iterator;
-
-		/** Default constructor.
-		  Initialize an empty BST.
-		 */
-		BST() : root(0), isize(0) {  }
-
-
-		/** Default destructor.
-		  Delete every node in this BST.
-		 */
-		virtual ~BST() {
-			deleteAll(root);
-		}
-
-		/** Given a reference to a Data item, insert a copy of it in this BST.
-		 *  Return  true if the item was added to this BST
-		 *  as a result of this call to insert,
-		 *  false if an item equal to this one was already in this BST.
-		 *  Note: This function should use only the '<' operator when comparing
-		 *  Data items.
-		 */
-		virtual bool insert(const Data& item) {
-			BSTNode<Data> *node = new BSTNode<Data>(item);
-			return insert(node);
-		}
-
+		// insert helper function
 		virtual bool insert(BSTNode<Data> *node) {
 			Data item = node->data;
 
@@ -93,6 +58,43 @@ class BST {
 
 			// could not add node
 			return false;
+		}
+
+
+		/** Pointer to the root of this BST, or 0 if the BST is empty */
+		BSTNode<Data>* root;
+
+		/** Number of Data items stored in this BST. */
+		unsigned int isize;
+
+	public:
+
+		/** define iterator as an aliased typename for BSTIterator<Data>. */
+		typedef BSTIterator<Data> iterator;
+
+		/** Default constructor.
+		  Initialize an empty BST.
+		 */
+		BST() : root(0), isize(0) {  }
+
+
+		/** Default destructor.
+		  Delete every node in this BST.
+		 */
+		virtual ~BST() {
+			deleteAll(root);
+		}
+
+		/** Given a reference to a Data item, insert a copy of it in this BST.
+		 *  Return  true if the item was added to this BST
+		 *  as a result of this call to insert,
+		 *  false if an item equal to this one was already in this BST.
+		 *  Note: This function should use only the '<' operator when comparing
+		 *  Data items.
+		 */
+		virtual bool insert(const Data& item) {
+			BSTNode<Data> *node = new BSTNode<Data>(item);
+			return insert(node);
 		}
 
 
@@ -159,7 +161,8 @@ class BST {
 		void inorder(BSTNode<Data>* n) const {
 			if(n==0) return;
 			inorder(n->left);
-			std::cout << *n << std::endl;
+			//std::cout << *n << std::endl;
+			std::cout << n->data << std::endl;
 			inorder(n->right);
 		}
 

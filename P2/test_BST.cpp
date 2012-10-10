@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <vector>
 #include <cstdlib>
+#include <map>
 
 using namespace std;
 
@@ -18,12 +19,16 @@ int main() {
 
   /* Create an STL vector of some ints */
   vector<int> v;
+  map<int, bool> m;
   
   for (int i = 0; i < 50; ++i) {
-	  int n = rand();
-	  v.push_back(n);
-	  v.erase(unique(v.begin(), v.end()), v.end());
+	  int n = rand() % 1000;
+	  if (!m[n]) {
+		  m[n] = true;
+		  v.push_back(n);
+	  }
   }
+  v.erase(unique(v.begin(), v.end()), v.end());
   
   std::cout << "v is size: " << v.size() << std::endl;
   for (size_t i = 0; i < v.size(); ++i) {

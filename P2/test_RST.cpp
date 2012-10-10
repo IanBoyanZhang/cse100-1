@@ -15,7 +15,8 @@ using namespace std;
  */
 int main(int argc, char** argv) {
 
-  int N = 1000;
+  //int N = 1000;
+  int N = 50;
   if(argc > 1) N = atoi(argv[1]);
   // a good RST implementation should need no more than this number
   // of key comparisons when inserting N keys
