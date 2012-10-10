@@ -7,7 +7,6 @@ template <typename Data>
 class RSTNode : public BSTNode<Data> {
 	public:
 		RSTNode(Data const & d) : BSTNode<Data>(d) {
-			// TODO: implement this constructor!
 			priority = rand();
 		}
 

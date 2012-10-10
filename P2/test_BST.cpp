@@ -32,7 +32,7 @@ int main() {
   
   std::cout << "v is size: " << v.size() << std::endl;
   for (size_t i = 0; i < v.size(); ++i) {
-	  std::cout << v[i] << std::endl;
+	  //std::cout << v[i] << std::endl;
   }
 
   /* Create an instance of BST holding int */
