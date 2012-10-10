@@ -31,18 +31,8 @@ class BST {
 
 		/** Default destructor.
 		  Delete every node in this BST.
-		 */ // TODO
+		 */
 		virtual ~BST() {
-/*
-			// find the first node
-			BSTNode<Data>* current = BST<Data>::first(root);
-			std::cout << "Deleting " << current->data << std::endl;
-			current = current->successor();
-			while (current) {
-				std::cout << "Deleting " << current->data << std::endl;
-				current = current->successor();
-			}
-*/
 			deleteAll(root);
 		}
 
