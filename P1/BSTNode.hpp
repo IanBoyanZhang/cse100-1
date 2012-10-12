@@ -28,7 +28,7 @@ class BSTNode {
 		 ** POSTCONDITION:  the BST is unchanged.
 		 ** RETURNS: the BSTNode that is the successor of this BSTNode,
 		 ** or 0 if there is none.
-		 */ // TODO
+		 */
 		BSTNode<Data>* successor() {
 			BSTNode<Data> *current = this;
 			// continue down the tree until we get the leftmost leaf
