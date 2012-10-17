@@ -1,6 +1,7 @@
 #ifndef HCTREE_HPP
 #define HCTREE_HPP
 
+#include <map>
 #include <queue>
 #include <vector>
 #include "HCNode.hpp"
@@ -29,6 +30,7 @@ class HCTree {
 private:
     HCNode* root;
     vector<HCNode*> leaves;
+	std::priority_queue<HCNode*, std::vector<HCNode*>, HCNodePtrComp> pq;
 
 public:
     explicit HCTree() : root(0) {
