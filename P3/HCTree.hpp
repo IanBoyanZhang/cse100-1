@@ -1,7 +1,7 @@
 #ifndef HCTREE_HPP
 #define HCTREE_HPP
 
-#include <map>
+#include <string>
 #include <queue>
 #include <vector>
 #include "HCNode.hpp"
@@ -28,6 +28,12 @@ public:
  */
 class HCTree {
 private:
+	// return the bit sequence needed to reach this symbol
+	std::string getCode(char symbol) const;
+
+	// return the decoded char for the given
+	char getSymbol(char encoded) const;
+
     HCNode* root;
     vector<HCNode*> leaves;
 	std::priority_queue<HCNode*, std::vector<HCNode*>, HCNodePtrComp> pq;

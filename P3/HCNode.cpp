@@ -2,5 +2,5 @@
 
 bool HCNode::operator<(const HCNode& other)
 {
-	return this->count < other.count;
+	return other.count < this->count;
 }

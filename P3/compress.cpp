@@ -4,6 +4,19 @@
 #include <vector>
 #include "HCTree.hpp"
 
+void makeHeader(HCTree hct, std::vector<int> freqs, std::ostream &os)
+{
+	os << "# HCT" << std::endl;
+	for (size_t i = 0; i < freqs.size(); ++i) {
+		if (freqs[i]) {
+			BitOutputStream bs(os);
+			hct.encode(i, bs);
+			bs.output(freqs[i]);
+		}
+	}
+	os << std::endl << "# END" << std::endl;
+}
+
 int main(int argc, char* argv[])
 {
 	// read the file into a buffer
@@ -21,6 +34,7 @@ int main(int argc, char* argv[])
 
 	HCTree hct;
 	hct.build(freqs);
+	makeHeader(hct, freqs, std::cout);
 
 	return 0;
 }
