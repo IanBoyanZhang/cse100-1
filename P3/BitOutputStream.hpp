@@ -12,7 +12,7 @@ class BitOutputStream
 		}
 
 		void writeBit(bool bit);
-		void output(char symbol);
+		void output();
 
 	private:
 		void flush();

@@ -25,8 +25,8 @@ class BitInputStream
 		}
 
 		std::vector<std::bitset<8> > bits;
+		std::string header;
 
 	private:
-		std::string header;
 		std::istream &in;
 };

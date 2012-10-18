@@ -9,9 +9,10 @@ void makeHeader(HCTree hct, std::vector<int> freqs, std::ostream &os)
 	os << "# HCT" << std::endl;
 	for (size_t i = 0; i < freqs.size(); ++i) {
 		if (freqs[i]) {
+			os << freqs[i];
 			BitOutputStream bs(os);
 			hct.encode(i, bs);
-			bs.output(freqs[i]);
+			bs.output();
 		}
 	}
 	os << std::endl << "# END" << std::endl;
@@ -34,7 +35,15 @@ int main(int argc, char* argv[])
 
 	HCTree hct;
 	hct.build(freqs);
-	makeHeader(hct, freqs, std::cout);
+
+	// output the compressed file
+	std::ofstream ofs(argv[2], std::ios::binary);
+	BitOutputStream bos(ofs);
+	makeHeader(hct, freqs, ofs);
+	for (size_t i = 0; i < buffer.size(); ++i) {
+		hct.encode(buffer[i], bos);
+	}
+	bos.output();
 
 	return 0;
 }

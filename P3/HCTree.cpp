@@ -110,7 +110,6 @@ void HCTree::encode(byte symbol, BitOutputStream& out) const
 			out.writeBit(false);
 		}
 	}
-	out.output(symbol);
 }
 
 int HCTree::decode(BitInputStream &in) const

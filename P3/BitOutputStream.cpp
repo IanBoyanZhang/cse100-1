@@ -19,12 +19,11 @@ void BitOutputStream::flush()
 	buffer += byte;
 	count = 0;
 	byte ^= byte;	// zero the byte
-	//std::cout << "BUFFER IS: " << buffer << std::endl;
 }
 
-void BitOutputStream::output(char symbol)
+void BitOutputStream::output()
 {
 	byte = byte << (8 - count);
 	flush();
-	out << symbol << buffer << " ";
+	out << buffer << " ";
 }
