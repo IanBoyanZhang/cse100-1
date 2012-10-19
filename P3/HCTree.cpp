@@ -73,31 +73,25 @@ void HCTree::build(const std::vector<int> &freqs)
 		node->c0 = pq.top();
 		node->c0->p = node;
 		pq.pop();
-
+		
 		node->c1 = pq.top();
 		node->c1->p = node;
 		pq.pop();
 
-		if (node->c0) {
-			node->count += node->c0->count;
-		}
-		if (node->c1) {
-			node->count += node->c1->count;
-		}
+		node->count += node->c0->count;
+		node->count += node->c1->count;
+
 		pq.push(node);
 	}
-
-	if (!node) {
-		root = pq.top();
-	}
-
 
 	root = pq.top();
 	preorder(root);
 
+	/*
 	std::cout << "CODE FOR A IS: " << getCode('A') << std::endl;
 	std::cout << "CODE FOR B IS: " << getCode('B') << std::endl;
 	std::cout << "CODE FOR C IS: " << getCode('C') << std::endl;
+	*/
 }
 
 void HCTree::encode(byte symbol, BitOutputStream& out) const

@@ -16,14 +16,8 @@ void BitOutputStream::writeBit(bool bit)
 
 void BitOutputStream::flush()
 {
-	buffer += byte;
+	byte = byte << (8 - count);
+	out << byte;
 	count = 0;
 	byte ^= byte;	// zero the byte
-}
-
-void BitOutputStream::output()
-{
-	byte = byte << (8 - count);
-	flush();
-	out << buffer << " ";
 }

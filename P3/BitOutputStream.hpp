@@ -12,11 +12,9 @@ class BitOutputStream
 		}
 
 		void writeBit(bool bit);
-		void output();
-
-	private:
 		void flush();
 
+	private:
 		int count;
 		char byte;
 		std::string buffer;
