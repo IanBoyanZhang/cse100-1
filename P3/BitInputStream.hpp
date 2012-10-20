@@ -9,13 +9,15 @@ class BitInputStream
 		BitInputStream(std::istream &in);
 
 		bool next();
-		bool good();
-		std::vector<int> getFreqs();
+		int peek();
 
+		bool good;
+
+		// parse the header for the character frequencies
+		std::vector<int> getFreqs();
 
 	private:
 		int position;
-		bool error;
 		std::vector<bool> bits;
 		std::string header;
 		std::istream &in;

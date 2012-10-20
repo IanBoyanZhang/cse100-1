@@ -108,22 +108,43 @@ void HCTree::encode(byte symbol, BitOutputStream& out) const
 
 int HCTree::decode(BitInputStream &in) const
 {
+	// traverse the tree until we get a leaf
 	HCNode *current = root;
-	while (in.good()) {
-		bool bit = in.next();
+	int bit, result;
+	while (in.good && (current->c0 || current->c1)) {
+		bit = in.next();
 		if (bit) {
-			if (current->c1) {
-				current = current->c1;
-			} else {
-				break;
-			}
+			current = current->c1;
 		} else {
-			if (current->c0) {
-				current = current->c0;
-			} else {
-				break;
-			}
+			current = current->c0;
 		}
 	}
-	return current->symbol;
+	result = current->symbol;
+
+	/*
+	current = root;
+	bit = in.peek();
+	while (in.good && (current->c0 || current->c1)) {
+		bit = in.next();
+		if (bit == 1) {
+			if (!current->c1) {
+				in.good = false;
+				break;
+			}
+			current = current->c1;
+		} else if (bit == 0) {
+			if (!current->c0) {
+				in.good = false;
+				break;
+			}
+			current = current->c0;
+		}
+	}
+	*/
+
+	if (current->c0 || current->c1) {
+		in.good = false;
+	}
+
+	return result;
 }

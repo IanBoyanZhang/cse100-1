@@ -22,7 +22,7 @@ int main(int argc, char* argv[])
 	hct.build(freqs);
 
 	std::ofstream ofs(argv[2], std::ios::binary);
-	while (bis.good()) {
+	while (bis.good) {
 		ofs << (char)hct.decode(bis);
 	}
 

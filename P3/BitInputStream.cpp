@@ -1,42 +1,43 @@
 #include <sstream>
 #include "BitInputStream.hpp"
 
-bool BitInputStream::good()
+int BitInputStream::peek()
 {
-	return !error;
+	if (position + 1 <= bits.size()) {
+		return bits[position + 1];
+	} else {
+		return -1;
+	}
 }
 
 bool BitInputStream::next()
 {
-	bool result = bits[position];
-	++position;
+	bool result = bits[position++];
 	if (position >= bits.size()) {
-		error = true;
+		good = false;
 	}
 	return result;
 }
 
-BitInputStream::BitInputStream(std::istream &in) : in(in), position(0), header(), error(false)
+BitInputStream::BitInputStream(std::istream &in) : in(in), position(0), header(), good(true)
 {
 	std::string line;
+
 	std::getline(in, line);
 	if (line != "# HCT") {
 		std::cout << "!!! This is not a compressed file !!!" << std::endl;
 	}
+
+	std::getline(in, header);
+
 	std::getline(in, line);
-	header = line;
-	std::getline(in, line);
-	while (line != "# END") {
-		header += "\n" + line;
-		std::getline(in, line);
+	if (line != "# END") {
+		std::cout << "!!! This is not a compressed file !!!" << std::endl;
 	}
-	std::string buffer;
-	std::getline(in, line);
-	buffer = line;
-	while (in.good()) {
-		buffer += "\n" + line;
-		std::getline(in, line);
-	}
+
+	std::string buffer((std::istreambuf_iterator<char>(in)),
+			(std::istreambuf_iterator<char>()));
+
 	for (size_t i = 0; i < buffer.size(); ++i) {
 		for (int j = 7; j >= 0; --j) {
 			if ((buffer[i] >> j) & 1) {
@@ -46,6 +47,7 @@ BitInputStream::BitInputStream(std::istream &in) : in(in), position(0), header()
 			}
 		}
 	}
+	/*
 	std::cout << "HEADER: " << header << std::endl;
 	std::cout << "BUFFER: " << buffer << std::endl;
 	std::cout << "BITS: ";
@@ -54,6 +56,7 @@ BitInputStream::BitInputStream(std::istream &in) : in(in), position(0), header()
 	}
 	std::cout << std::endl;
 	std::cout << "SIZE: " <<  bits.size() << std::endl;
+	*/
 }
 
 std::vector<int> BitInputStream::getFreqs()
@@ -62,18 +65,9 @@ std::vector<int> BitInputStream::getFreqs()
 
 	std::stringstream ss(header);
 	while (!ss.eof()) {
-		std::string key;
-		ss >> key;
-		char c = key[0];
-		if (!c) {
-			break;
-		}
-
-		std::stringstream ss2(key.substr(1));
-		int frequency;
-		ss2 >> frequency;
-
-		result[c] = frequency;
+		int key, frequency;
+		ss >> key >> frequency;
+		result[key] = frequency;
 	}
 
 	return result;
