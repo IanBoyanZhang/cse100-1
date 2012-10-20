@@ -8,12 +8,15 @@ class BitInputStream
 	public:
 		BitInputStream(std::istream &in);
 
-		bool nextBit();
-		std::vector<int> getFrequncies();
+		bool next();
+		bool good();
+		std::vector<int> getFreqs();
 
-		std::vector<bool> bits;
 
 	private:
+		int position;
+		bool error;
+		std::vector<bool> bits;
 		std::string header;
 		std::istream &in;
 };

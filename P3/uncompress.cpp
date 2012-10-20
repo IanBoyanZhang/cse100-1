@@ -16,14 +16,15 @@ int main(int argc, char* argv[])
 	BitInputStream bis(ss);
 
 	// count the occurences of each char
-	std::vector<int> freqs(256, 0);
-	for (size_t i = 0; i < bis.header.size(); ++i) {
-		char c = bis.header[i];
-		++freqs[c];
-	}
+	std::vector<int> freqs = bis.getFreqs();
 
 	HCTree hct;
 	hct.build(freqs);
+
+	std::ofstream ofs(argv[2], std::ios::binary);
+	while (bis.good()) {
+		ofs << (char)hct.decode(bis);
+	}
 
 	return 0;
 }

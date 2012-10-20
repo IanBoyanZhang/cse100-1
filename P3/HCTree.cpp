@@ -58,7 +58,7 @@ char HCTree::getSymbol(char encoded) const
 void HCTree::build(const std::vector<int> &freqs)
 {
 	for (size_t i = 0; i < freqs.size(); ++i) {
-		if (freqs[i] > 0) {
+		if (freqs[i]) {
 			HCNode *node = new HCNode(freqs[i], i);
 			leaves[i] = node;
 			pq.push(node);
@@ -87,10 +87,10 @@ void HCTree::build(const std::vector<int> &freqs)
 	root = pq.top();
 	preorder(root);
 
-	/*
 	std::cout << "CODE FOR A IS: " << getCode('A') << std::endl;
 	std::cout << "CODE FOR B IS: " << getCode('B') << std::endl;
 	std::cout << "CODE FOR C IS: " << getCode('C') << std::endl;
+	/*
 	*/
 }
 
@@ -108,4 +108,22 @@ void HCTree::encode(byte symbol, BitOutputStream& out) const
 
 int HCTree::decode(BitInputStream &in) const
 {
+	HCNode *current = root;
+	while (in.good()) {
+		bool bit = in.next();
+		if (bit) {
+			if (current->c1) {
+				current = current->c1;
+			} else {
+				break;
+			}
+		} else {
+			if (current->c0) {
+				current = current->c0;
+			} else {
+				break;
+			}
+		}
+	}
+	return current->symbol;
 }
