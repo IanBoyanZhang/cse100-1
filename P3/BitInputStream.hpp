@@ -8,11 +8,13 @@ class BitInputStream
 	public:
 		BitInputStream(std::istream &in);
 
-		std::vector<std::bitset<8> > bits;
-		std::string header;
-		static std::vector<int> getFrequency();
+		bool nextBit();
+		std::vector<int> getFrequncies();
+
+		std::vector<bool> bits;
 
 	private:
+		std::string header;
 		std::istream &in;
 };
 

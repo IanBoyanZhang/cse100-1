@@ -15,6 +15,19 @@ BitInputStream::BitInputStream(std::istream &in) : in(in), header()
 	std::string buffer;
 	std::getline(in, buffer);
 	for (size_t i = 0; i < buffer.size(); ++i) {
-		bits.push_back(std::bitset<8>(buffer[i]));
+		for (int j = 7; j >= 0; --j) {
+			if ((buffer[i] >> j) & 1) {
+				bits.push_back(true);
+			} else {
+				bool.push_back(false);
+			}
+		}
 	}
+}
+
+std::vector<int> BitInputStream::getFrequncies()
+{
+	std::stringstream ss(header);
+	std::string key;
+	key << ss;
 }
