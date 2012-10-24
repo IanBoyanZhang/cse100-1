@@ -5,6 +5,7 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
+#include <cstdlib>
 
 using namespace std;
 
@@ -17,11 +18,17 @@ int main() {
 
   /* Create an STL vector of some ints */
   vector<int> v;
-  v.push_back(3);
-  v.push_back(4);
-  v.push_back(1);
-  v.push_back(100);
-  v.push_back(-33);
+  
+  for (int i = 0; i < 50; ++i) {
+	  int n = rand();
+	  v.push_back(n);
+	  v.erase(unique(v.begin(), v.end()), v.end());
+  }
+  
+  std::cout << "v is size: " << v.size() << std::endl;
+  for (size_t i = 0; i < v.size(); ++i) {
+	  std::cout << v[i] << std::endl;
+  }
 
   /* Create an instance of BST holding int */
   BST<int> b;

@@ -31,7 +31,7 @@ class BSTNode {
 		 */
 		BSTNode<Data>* successor() {
 			BSTNode<Data> *current = this;
-			// continue down the tree until we get the leftmost leaf
+			// continue down the tree until we get the next leftmost leaf
 			if (current->right) {
 				current = current->right;
 				while (current->left) {
@@ -47,6 +47,9 @@ class BSTNode {
 					return current;
 				}
 				current = current->parent;
+				if (current && current->data > this->data) {
+					return current;
+				}
 			}
 
 			// no succesor was found
