@@ -10,9 +10,9 @@ CXXFLAGS= -g -Wall
 #include debugging symbols in executable
 LDFLAGS= -g	
 
-bst: test_BST.o 
-	g++ -o bst test_BST.o
+rst: test_RST.o countint.o
+	g++ -o rst test_RST.o countint.o
 
+test_RST.o: test_BST.o RSTNode.hpp RST.hpp countint.hpp
 test_BST.o: BST.hpp BSTNode.hpp BSTIterator.hpp 
-
 
