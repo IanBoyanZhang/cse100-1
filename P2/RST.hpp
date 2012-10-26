@@ -66,6 +66,7 @@ class RST : public BST<Data> {
 				*/
 
 				fixParentPointers(this->root);
+				//fixParentPointers(node);
 				parent = (RSTNode<Data>*)(node->parent);
 			}
 		}

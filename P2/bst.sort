@@ -1,0 +1,15 @@
+# Data Structure: bst
+# Data: sorted
+# N: 1024
+# runs: 5
+# N	avgcomps	stdev
+1	2		0
+3	4		0
+7	8		0
+15	16		0
+31	32		0
+63	64		0
+127	128		0
+255	256		0
+511	512		0
+1023	1024		0

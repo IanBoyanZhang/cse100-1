@@ -73,10 +73,10 @@ void benchmark(int n, bool sorted, std::string type, int runs, double &avg, doub
 	for (int i = 0; i < runs; ++i) {
 		double result = single(n, sorted, type);
 		sum += result;
-		squares += result + result;
+		squares += result * result;
 	}
 	avg = sum / runs;
-	double avgsquares = squares / runs;
+	double avgsquares = squares / (double)runs;
 	stdev = sqrt(abs(avgsquares - (avg * avg)));
 }
 
@@ -90,7 +90,6 @@ int main(int argc, char *argv[])
 	std::stringstream ss(std::string(argv[3]) + " " +  std::string(argv[4]));
 	int N, runs;
 	ss >> N >> runs;
-	std::cout << "TYPE" << type << std::endl;
 
 
 	// comment output
