@@ -22,6 +22,16 @@ double single(int n, bool sorted, std::string type)
 		std::random_shuffle(v.begin(), v.end());
 	}
 
+	/*
+	std::cout << std::endl;
+	std::cout << "INSERTING VALUES: " << std::endl;
+
+	for (size_t i = 0; i < v.size(); ++i) {
+		std::cout << v[i] << std::endl;
+		std::cout << std::endl;
+	}
+	*/
+
 	// lots of copy and pasting here because of scoping issues
 	if (type == "set") {
 		std::set<countint> t;
@@ -87,6 +97,7 @@ int main(int argc, char *argv[])
 	std::cout << "# Data Structure: " << type << std::endl;
 	std::cout << "# Data: " << data << std::endl;
 	std::cout << "# N: " << N << std::endl;
+	std::cout << "# runs: " << runs << std::endl;
 	std::cout << "# N\tavgcomps\tstdev" << std::endl;
 
 	// main loop

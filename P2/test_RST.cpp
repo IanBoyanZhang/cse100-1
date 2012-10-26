@@ -22,8 +22,16 @@ int main(int argc, char** argv) {
   double  maxcompsperkey =  (log(N) * 2.5); 
 
   /* Create an STL vector of some countints, in sorted order */
+  /*
   vector<countint> v;
   for(int i=0; i<N; i++) {
+    //    v.push_back(i);
+    v.push_back(i);
+  }
+  */
+
+  vector<countint> v;
+  for(int i=N; i>0; --i) {
     //    v.push_back(i);
     v.push_back(i);
   }
@@ -61,6 +69,7 @@ int main(int argc, char** argv) {
 
   /* Test iterator; should iterate the entire tree inorder */
   cout << "Checking traversal using iterator...";
+  sort(v.begin(), v.end());
   vit = v.begin();
   BST<countint>::iterator en = r.end();
   BST<countint>::iterator it = r.begin();
