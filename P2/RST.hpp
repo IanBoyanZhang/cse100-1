@@ -9,67 +9,59 @@ class RST : public BST<Data> {
 		virtual bool insert(const Data& item) {
 			// TODO: implement this function!
 			RSTNode<Data> *node = new RSTNode<Data>(item);
-			if (this->empty()) {
-				this->root = node;
-				node->parent = 0;
-				++(this->isize);
+			if (BST<Data>::insert(node)) {
+				restore(node);
 				return true;
 			}
 
-			// add node to the correct position
-			BSTNode<Data> *current = this->root;
-			while (current) {
-				// node belongs in left subtree
-				if (item < current->data) {
-					// stop before a null node
-					if (current->left) {
-						current = current->left;
-					} else {
-						// add node to the left
-						node->parent = current;
-						current->left = node;
-						++(this->isize);
-
-						// check priority
-						restore(node);
-
-						return true;
-					}
-					// node belongs in right subtree
-				} else if (current->data < item) {
-					// stop before a null node
-					if (current->right) {
-						current = current->right;
-					} else {
-						// add node to the right
-						node->parent = current;
-						current->right = node;
-						++(this->isize);
-
-						// check priority
-						restore(node);
-
-						return true;
-					}
-				} else {
-					break;
-				}
-			}
-
-			// could not add node
 			return false;
 		}
 
-	private:
 		// check priority and perform necessary rotations
 		void restore(RSTNode<Data>* node) {
+			RSTNode<Data> *parent = (RSTNode<Data>*)node->parent;
+			if (!parent) {
+				return;
+			}
+
 			int priority = node->getPriority();
-			if (priority > ((RSTNode<Data>*)(node->parent))->getPriority()) {
+			if (parent && priority > parent->getPriority()) {
+				if (parent->left == node) {
+					std::cout << "ROTATING RIGHT" << std::endl;
+					std::cout << node->data << std::endl;
+					std::cout << "Priority: " << node->getPriority() << std::endl;
+					std::cout << "Parent Priority: " << parent->getPriority() << std::endl;
+					/*
+					*/
+					node = rotateWithLeftChild(node);
+				} else {
+					std::cout << "ROTATING LEFT" << std::endl;
+					std::cout << node->data << std::endl;
+					std::cout << "Priority: " << node->getPriority() << std::endl;
+					std::cout << "Parent Priority: " << parent->getPriority() << std::endl;
+					/*
+					*/
+					node = rotateWithRightChild(node);
+				}
+				priority = node->getPriority();
+				parent = (RSTNode<Data>*)node->parent;
 			}
 		}
 
-		void rotateL(RSTNode<Data>* node) {
-			BSTNode*
+	private:
+		RSTNode<Data>* rotateWithLeftChild(RSTNode<Data>* node) {
+			RSTNode<Data> *l = (RSTNode<Data>*)node->left;
+			node->left = l->right;
+			l->right = node;
+			return l;
+		}
+
+		RSTNode<Data>* rotateWithRightChild(RSTNode<Data>* node) {
+			RSTNode<Data> *r = (RSTNode<Data>*)node->right;
+			
+			node->right = r->left;
+			r->left = node;
+			return r;
 		}
 };
 #endif // RST_HPP

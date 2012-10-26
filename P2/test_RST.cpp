@@ -66,10 +66,10 @@ int main(int argc, char** argv) {
   BST<countint>::iterator it = r.begin();
   int i = 0;
   for(; it != en; ++it) {
-    //    cout << *it << endl;
+        cout << *it << endl;
     if(*it != *vit) {
       cout << endl << "Incorrect inorder iteration of RST." << endl;
-      return -1;
+      //return -1;
     }
     ++i;
     ++vit;

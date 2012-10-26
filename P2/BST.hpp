@@ -45,6 +45,12 @@ class BST {
 		 */
 		virtual bool insert(const Data& item) {
 			BSTNode<Data> *node = new BSTNode<Data>(item);
+			return insert(node);
+		}
+
+		virtual bool insert(BSTNode<Data> *node) {
+			Data item = node->data;
+
 			if (this->empty()) {
 				// add new node to root
 				root = node;
