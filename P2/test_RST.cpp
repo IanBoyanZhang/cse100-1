@@ -15,8 +15,7 @@ using namespace std;
  */
 int main(int argc, char** argv) {
 
-  //int N = 1000;
-  int N = 50;
+  int N = 1000;
   if(argc > 1) N = atoi(argv[1]);
   // a good RST implementation should need no more than this number
   // of key comparisons when inserting N keys
@@ -67,10 +66,10 @@ int main(int argc, char** argv) {
   BST<countint>::iterator it = r.begin();
   int i = 0;
   for(; it != en; ++it) {
-        cout << *it << endl;
+    //    cout << *it << endl;
     if(*it != *vit) {
       cout << endl << "Incorrect inorder iteration of RST." << endl;
-      //return -1;
+      return -1;
     }
     ++i;
     ++vit;
