@@ -19,9 +19,9 @@ void HCTree::preorder(HCNode* node)
 	preorder(node->c1);
 }
 
-std::string HCTree::getCode(char symbol) const
+std::string HCTree::getCode(byte symbol) const
 {
-	std::string code = "";
+	std::string code;
 	HCNode* node = leaves[symbol];
 	while (node->p) {
 		if (node == node->p->c0) {
@@ -43,7 +43,6 @@ void HCTree::build(const std::vector<int> &freqs)
 			pq.push(node);
 		}
 	}
-	std::cout << pq.size() << std::endl;
 
 	HCNode *node;
 	while (pq.size() > 1) {
@@ -64,7 +63,9 @@ void HCTree::build(const std::vector<int> &freqs)
 	}
 
 	root = pq.top();
+	/*
 	preorder(root);
+	*/
 
 	/*
 	std::cout << "CODE FOR A IS: " << getCode('A') << std::endl;
@@ -96,8 +97,14 @@ int HCTree::decode(BitInputStream &in) const
 			return -1;
 		}
 		if (bit) {
+			if (!current->c1) {
+				return -1;
+			}
 			current = current->c1;
 		} else {
+			if (!current->c0) {
+				return -1;
+			}
 			current = current->c0;
 		}
 	}

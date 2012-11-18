@@ -61,7 +61,7 @@ public:
     int decode(BitInputStream& in) const;
 
 	// return the bit sequence needed to reach this symbol
-	std::string getCode(char symbol) const;
+	std::string getCode(byte symbol) const;
 
 	int size;
 	void preorder(HCNode*);

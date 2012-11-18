@@ -23,10 +23,11 @@ int main(int argc, char* argv[])
 	std::string buffer((std::istreambuf_iterator<char>(ifs)),
 				(std::istreambuf_iterator<char>()));
 
-	// make a BitInputStream from the file
+	// create a BitInputStream
 	std::stringstream ss(buffer);
 	BitInputStream bis(ss);
 
+	// build the tree
 	HCTree hct;
 	hct.build(bis.freqs);
 
