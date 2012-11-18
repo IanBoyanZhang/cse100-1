@@ -28,12 +28,6 @@ public:
  */
 class HCTree {
 private:
-	// return the bit sequence needed to reach this symbol
-	std::string getCode(char symbol) const;
-
-	// return the decoded char for the given
-	char getSymbol(char encoded) const;
-
     HCNode* root;
     vector<HCNode*> leaves;
 	std::priority_queue<HCNode*, std::vector<HCNode*>, HCNodePtrComp> pq;
@@ -65,6 +59,12 @@ public:
      *  tree, and initialize root pointer and leaves vector.
      */
     int decode(BitInputStream& in) const;
+
+	// return the bit sequence needed to reach this symbol
+	std::string getCode(char symbol) const;
+
+	int size;
+	void preorder(HCNode*);
 };
 
 #endif // HCTREE_HPP

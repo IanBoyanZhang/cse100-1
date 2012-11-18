@@ -4,19 +4,15 @@
 class BitOutputStream
 {
 	public:
-		BitOutputStream(std::ostream &out) : out(out), count(0), byte(0)
-		{
-			buffer = "";
-			byte = 'a';
-			byte ^= byte;	// zero the byte
-		}
+		BitOutputStream(std::ostream &out);
+		~BitOutputStream();
 
 		void writeBit(bool bit);
 		void flush();
 
+		std::ostream &out;
+
 	private:
 		int count;
 		char byte;
-		std::string buffer;
-		std::ostream &out;
 };

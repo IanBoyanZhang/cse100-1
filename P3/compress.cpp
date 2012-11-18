@@ -1,24 +1,25 @@
 #include <iostream>
 #include <fstream>
-#include <map>
+#include <sstream>
+#include <numeric>
 #include <vector>
 #include "HCTree.hpp"
 
-// creates the header for the decode program
-void makeHeader(HCTree hct, std::vector<int> freqs, std::ostream &os)
+// creates the header used for the uncompress program with the following format:
+/*
+	# HCT
+	char freq char freq ... char freq
+	# END
+*/
+void makeHeader(std::ostream &out, HCTree hct, std::vector<int> freqs)
 {
-	os << "# HCT" << std::endl;
+	out << "# HCT" << std::endl;
 	for (size_t i = 0; i < freqs.size(); ++i) {
 		if (freqs[i]) {
-			os << i << " " << freqs[i] << " ";
-			/*
-			BitOutputStream bs(os);
-			hct.encode(i, bs);
-			bs.flush();
-			*/
+			out << i << " " << freqs[i] << " ";
 		}
 	}
-	os << std::endl << "# END" << std::endl;
+	out << std::endl << "# END" << std::endl;
 }
 
 int main(int argc, char* argv[])
@@ -41,11 +42,10 @@ int main(int argc, char* argv[])
 	// output the compressed file
 	std::ofstream ofs(argv[2], std::ios::binary);
 	BitOutputStream bos(ofs);
-	makeHeader(hct, freqs, ofs);
+	makeHeader(ofs, hct, freqs);
 	for (size_t i = 0; i < buffer.size(); ++i) {
 		hct.encode(buffer[i], bos);
 	}
-	bos.flush();
 
 	return 0;
 }

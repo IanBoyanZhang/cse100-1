@@ -1,10 +1,18 @@
 #include "BitOutputStream.hpp"
 
-void BitOutputStream::writeBit(bool bit)
+BitOutputStream::BitOutputStream(std::ostream &out) : out(out), byte(0), count(0)
 {
-	if (count >= 8) {
+}
+
+BitOutputStream::~BitOutputStream()
+{
+	if (count) {
 		flush();
 	}
+}
+
+void BitOutputStream::writeBit(bool bit)
+{
 	++count;
 
 	if (bit) {
@@ -12,12 +20,16 @@ void BitOutputStream::writeBit(bool bit)
 	} else {
 		byte = (byte << 1);
 	}
+
+	if (count >= 8) {
+		flush();
+	}
 }
 
 void BitOutputStream::flush()
 {
 	byte = byte << (8 - count);
-	out << byte;
 	count = 0;
+	out << byte;
 	byte ^= byte;	// zero the byte
 }

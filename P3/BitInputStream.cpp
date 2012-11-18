@@ -1,28 +1,9 @@
 #include <sstream>
 #include "BitInputStream.hpp"
 
-int BitInputStream::peek()
-{
-	if (position + 1 <= bits.size()) {
-		return bits[position + 1];
-	} else {
-		return -1;
-	}
-}
-
-bool BitInputStream::next()
-{
-	bool result = bits[position++];
-	if (position >= bits.size()) {
-		good = false;
-	}
-	return result;
-}
-
-BitInputStream::BitInputStream(std::istream &in) : in(in), position(0), header(), good(true)
+BitInputStream::BitInputStream(std::istream &in) : in(in), index(0), header(), good(true), size(0)
 {
 	std::string line;
-
 	std::getline(in, line);
 	if (line != "# HCT") {
 		std::cout << "!!! This is not a compressed file !!!" << std::endl;
@@ -31,13 +12,18 @@ BitInputStream::BitInputStream(std::istream &in) : in(in), position(0), header()
 	std::getline(in, header);
 
 	std::getline(in, line);
-	if (line != "# END") {
-		std::cout << "!!! This is not a compressed file !!!" << std::endl;
-	}
+	// # END
 
 	std::string buffer((std::istreambuf_iterator<char>(in)),
 			(std::istreambuf_iterator<char>()));
 
+	freqs = std::vector<int>(256, 0);
+	getFreqs();
+	readBuffer(buffer);
+}
+
+void BitInputStream::readBuffer(std::string buffer)
+{
 	for (size_t i = 0; i < buffer.size(); ++i) {
 		for (int j = 7; j >= 0; --j) {
 			if ((buffer[i] >> j) & 1) {
@@ -47,28 +33,35 @@ BitInputStream::BitInputStream(std::istream &in) : in(in), position(0), header()
 			}
 		}
 	}
-	/*
+}
+
+void BitInputStream::print()
+{
 	std::cout << "HEADER: " << header << std::endl;
-	std::cout << "BUFFER: " << buffer << std::endl;
 	std::cout << "BITS: ";
 	for (size_t i = 0; i < bits.size(); ++i) {
 		std::cout << bits[i];
+		if ((i + 1) % 8 == 0) {
+			std::cout << " ";
+		}
 	}
 	std::cout << std::endl;
-	std::cout << "SIZE: " <<  bits.size() << std::endl;
-	*/
 }
 
-std::vector<int> BitInputStream::getFreqs()
+int BitInputStream::next()
 {
-	std::vector<int> result(256, 0);
+	if (index >= size) {
+		return -1;
+	}
+	return bits[index++];
+}
 
+void BitInputStream::getFreqs()
+{
 	std::stringstream ss(header);
 	while (!ss.eof()) {
 		int key, frequency;
 		ss >> key >> frequency;
-		result[key] = frequency;
+		freqs[key] = frequency;
 	}
-
-	return result;
 }

@@ -4,6 +4,18 @@
 #include <sstream>
 #include "HCTree.hpp"
 
+// get the size of the compressed file in bits
+int getSize(HCTree hct, std::vector<int> freqs)
+{
+	int result = 0;
+	for (size_t i = 0; i < freqs.size(); ++i) {
+		if (freqs[i]) {
+			result += freqs[i] * hct.getCode(i).size(); 
+		}
+	}
+	return result;
+}
+
 int main(int argc, char* argv[])
 {
 	// read the file into a buffer
@@ -15,15 +27,17 @@ int main(int argc, char* argv[])
 	std::stringstream ss(buffer);
 	BitInputStream bis(ss);
 
-	// count the occurences of each char
-	std::vector<int> freqs = bis.getFreqs();
-
 	HCTree hct;
-	hct.build(freqs);
+	hct.build(bis.freqs);
+
+	bis.size = getSize(hct, bis.freqs);
 
 	std::ofstream ofs(argv[2], std::ios::binary);
-	while (bis.good) {
-		ofs << (char)hct.decode(bis);
+
+	int c = hct.decode(bis);
+	while (c >= 0) {
+		ofs << (char)c;
+		c = hct.decode(bis);
 	}
 
 	return 0;
