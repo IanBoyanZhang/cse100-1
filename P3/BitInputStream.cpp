@@ -11,12 +11,11 @@ BitInputStream::BitInputStream(std::istream &in) : in(in), index(0), header(), g
 
 	std::getline(in, header);
 
-	std::getline(in, line);
-	// # END
-
+	// copy the contents of the file to a string
 	std::string buffer((std::istreambuf_iterator<char>(in)),
 			(std::istreambuf_iterator<char>()));
 
+	// parse the header
 	freqs = std::vector<int>(256, 0);
 	getFreqs();
 	readBuffer(buffer);

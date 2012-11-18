@@ -19,7 +19,7 @@ void makeHeader(std::ostream &out, std::vector<int> freqs)
 			out << i << " " << freqs[i] << " ";
 		}
 	}
-	out << std::endl << "# END" << std::endl;
+	out << std::endl;
 }
 
 int main(int argc, char* argv[])

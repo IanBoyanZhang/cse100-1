@@ -43,6 +43,7 @@ int main(int argc, char* argv[])
 
 	// decode each byte into the uncompressed file
 	int c = hct.decode(bis);
+	int i = 0;
 	while (c >= 0) {
 		ofs << (byte)c;
 		c = hct.decode(bis);

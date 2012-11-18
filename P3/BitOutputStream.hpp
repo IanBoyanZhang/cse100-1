@@ -7,7 +7,7 @@ class BitOutputStream
 		BitOutputStream(std::ostream &out);
 		~BitOutputStream();
 
-		// pack a single bit into the byte
+		// pack a single bit
 		void writeBit(bool bit);
 
 		// send the byte to the stream
