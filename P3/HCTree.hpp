@@ -30,14 +30,16 @@ class HCTree {
 private:
     HCNode* root;
     vector<HCNode*> leaves;
+    vector<string> codes;	// cache the bit sequence for each leaf
 	std::priority_queue<HCNode*, std::vector<HCNode*>, HCNodePtrComp> pq;
 
 public:
     explicit HCTree() : root(0) {
         leaves = vector<HCNode*>(256, (HCNode*) 0);
+        codes = vector<std::string>(256, std::string());
     }
 
-    ~HCTree();
+    //~HCTree();
 
     /** Use the Huffman algorithm to build a Huffman coding trie.
      *  PRECONDITION: freqs is a vector of ints, such that freqs[i] is 
@@ -63,7 +65,7 @@ public:
 	// return the bit sequence needed to reach this symbol
 	std::string getCode(byte symbol) const;
 
-	int size;
+	// for debugging, output the HCTree in preorder
 	void preorder(HCNode*);
 };
 

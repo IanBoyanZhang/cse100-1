@@ -2,9 +2,12 @@
 #include <bitset>
 #include "HCTree.hpp"
 
+/*
 HCTree::~HCTree()
 {
+	//delete root;
 }
+*/
 
 void HCTree::preorder(HCNode* node)
 {
@@ -12,15 +15,19 @@ void HCTree::preorder(HCNode* node)
 		return;
 	}
 	if (!node->c0 && !node->c1) {
-		//std::cout << node->symbol << ": " << node->count << std::endl;
 		std::cout << node->symbol << ": " << getCode(node->symbol) << std::endl;
 	}
 	preorder(node->c0);
 	preorder(node->c1);
 }
 
-std::string HCTree::getCode(byte symbol) const
-{
+std::string HCTree::getCode(byte symbol) const {
+	// used the cached bit sequence
+	if (codes[symbol].size()) {
+		return codes[symbol];
+	}
+
+	// follow the leaf up to the parent
 	std::string code;
 	HCNode* node = leaves[symbol];
 	while (node->p) {
@@ -39,6 +46,7 @@ void HCTree::build(const std::vector<int> &freqs)
 	for (size_t i = 0; i < freqs.size(); ++i) {
 		if (freqs[i]) {
 			HCNode *node = new HCNode(freqs[i], i);
+			HCNode node = HCNode(freqs[i], i);
 			leaves[i] = node;
 			pq.push(node);
 		}

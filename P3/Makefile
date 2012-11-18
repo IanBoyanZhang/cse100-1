@@ -26,3 +26,11 @@ purify:
 	purify -cache-dir=$HOME g++ compress.cpp BitOutputStream.cpp BitInputStream.cpp HCTree.cpp HCNode.cpp -o compress
 
 	purify -cache-dir=$HOME g++ uncompress.cpp BitOutputStream.cpp BitInputStream.cpp HCTree.cpp HCNode.cpp -o uncompress
+
+test: compress uncompress
+	./compress input_files/justA output_files/justA
+	./compress input_files/justABC output_files/justABC
+	./compress input_files/empty output_files/empty
+	./compress input_files/binary.dat output_files/binary.dat
+	./compress input_files/warandpeace.txt output_files/warandpeace.txt
+	./compress input_files/kamasutra.txt output_files/kamasutra.txt

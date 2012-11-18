@@ -1,8 +1,8 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <numeric>
 #include <vector>
+#include <cstdlib>
 #include "HCTree.hpp"
 
 // creates the header used for the uncompress program with the following format:
@@ -28,6 +28,12 @@ int main(int argc, char* argv[])
 	std::ifstream ifs(argv[1], std::ios::binary);
 	std::string buffer((std::istreambuf_iterator<char>(ifs)),
 				(std::istreambuf_iterator<char>()));
+
+	// create a new file if we're trying to comrpess an empty file
+	if (!buffer.size()) {
+		std::ofstream ofs(argv[2], std::ios::binary);
+		exit(0);
+	}
 
 	// count the occurences of each char
 	std::vector<int> freqs(256, 0);

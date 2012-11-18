@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <cstdlib>
 #include "HCTree.hpp"
 
 // get the size of the compressed file in bits
@@ -23,6 +24,12 @@ int main(int argc, char* argv[])
 	std::string buffer((std::istreambuf_iterator<char>(ifs)),
 				(std::istreambuf_iterator<char>()));
 
+	// create a new file if we're trying to uncompress an empty file
+	if (!buffer.size()) {
+		std::ofstream ofs(argv[2], std::ios::binary);
+		exit(0);
+	}
+
 	// create a BitInputStream
 	std::stringstream ss(buffer);
 	BitInputStream bis(ss);
@@ -30,14 +37,14 @@ int main(int argc, char* argv[])
 	// build the tree
 	HCTree hct;
 	hct.build(bis.freqs);
-
 	bis.size = getSize(hct, bis.freqs);
 
 	std::ofstream ofs(argv[2], std::ios::binary);
 
+	// decode each byte into the uncompressed file
 	int c = hct.decode(bis);
 	while (c >= 0) {
-		ofs << (char)c;
+		ofs << (byte)c;
 		c = hct.decode(bis);
 	}
 
