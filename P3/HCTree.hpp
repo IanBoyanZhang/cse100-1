@@ -39,7 +39,7 @@ public:
         codes = vector<std::string>(256, std::string());
     }
 
-    //~HCTree();
+    ~HCTree();
 
     /** Use the Huffman algorithm to build a Huffman coding trie.
      *  PRECONDITION: freqs is a vector of ints, such that freqs[i] is 

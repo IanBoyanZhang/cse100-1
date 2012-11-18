@@ -2,12 +2,10 @@
 #include <bitset>
 #include "HCTree.hpp"
 
-/*
 HCTree::~HCTree()
 {
-	//delete root;
+	delete root;
 }
-*/
 
 void HCTree::preorder(HCNode* node)
 {
@@ -31,7 +29,7 @@ std::string HCTree::getCode(byte symbol) const {
 	std::string code;
 	HCNode* node = leaves[symbol];
 	while (node->p) {
-		if (node == node->p->c0) {
+		if (node->p->c0 && node == node->p->c0) {
 			code = "0" + code;
 		} else {
 			code = "1" + code;
@@ -46,7 +44,6 @@ void HCTree::build(const std::vector<int> &freqs)
 	for (size_t i = 0; i < freqs.size(); ++i) {
 		if (freqs[i]) {
 			HCNode *node = new HCNode(freqs[i], i);
-			HCNode node = HCNode(freqs[i], i);
 			leaves[i] = node;
 			pq.push(node);
 		}

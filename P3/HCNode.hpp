@@ -13,7 +13,7 @@ class HCNode {
   friend bool comp(HCNode* one, HCNode* other);
 
 public:
-  //~HCNode();
+  ~HCNode();
   int count;
   byte symbol; // byte in the file we're keeping track of
   HCNode* c0;  // pointer to '0' child

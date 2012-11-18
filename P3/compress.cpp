@@ -11,7 +11,7 @@
 	char freq char freq ... char freq
 	# END
 */
-void makeHeader(std::ostream &out, HCTree hct, std::vector<int> freqs)
+void makeHeader(std::ostream &out, std::vector<int> freqs)
 {
 	out << "# HCT" << std::endl;
 	for (size_t i = 0; i < freqs.size(); ++i) {
@@ -49,7 +49,7 @@ int main(int argc, char* argv[])
 	// output the compressed file
 	std::ofstream ofs(argv[2], std::ios::binary);
 	BitOutputStream bos(ofs);
-	makeHeader(ofs, hct, freqs);
+	makeHeader(ofs, freqs);
 	for (size_t i = 0; i < buffer.size(); ++i) {
 		hct.encode(buffer[i], bos);
 	}

@@ -6,7 +6,7 @@
 #include "HCTree.hpp"
 
 // get the size of the compressed file in bits
-int getSize(HCTree hct, std::vector<int> freqs)
+int getSize(HCTree &hct, std::vector<int> freqs)
 {
 	int result = 0;
 	for (size_t i = 0; i < freqs.size(); ++i) {
