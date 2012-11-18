@@ -28,7 +28,7 @@ std::string HCTree::getCode(byte symbol) const {
 	std::string code;
 	HCNode* node = leaves[symbol];
 
-	// follow the leaf up to the parent
+	// follow the leaf up to the root
 	while (node->p) {
 		if (node->p->c0 && node == node->p->c0) {
 			code = "0" + code;
@@ -42,6 +42,7 @@ std::string HCTree::getCode(byte symbol) const {
 
 void HCTree::build(const std::vector<int> &freqs)
 {
+	// add the leaves to the priority_queue
 	for (size_t i = 0; i < freqs.size(); ++i) {
 		if (freqs[i]) {
 			HCNode *node = new HCNode(freqs[i], i);
@@ -51,10 +52,12 @@ void HCTree::build(const std::vector<int> &freqs)
 	}
 
 	HCNode *node;
+	// add a dummy node if we only have a single node
 	if (pq.size() == 1) {
 		pq.push(new HCNode(0, 0));
 	}
 
+	// construct internal nodes
 	while (pq.size() > 1) {
 		node = new HCNode(0, 0);
 
@@ -90,23 +93,18 @@ void HCTree::encode(byte symbol, BitOutputStream& out) const
 
 int HCTree::decode(BitInputStream &in) const
 {
-	// traverse the tree until we run out of bits or get a leaf
 	HCNode *current = root;
 	int bit;
+
+	// traverse the tree until we run out of bits or get a leaf
 	while (current->c0 || current->c1) {
 		bit = in.next();
 		if (bit < 0) {
 			return -1;
 		}
 		if (bit) {
-			if (!current->c1) {
-				return -1;
-			}
 			current = current->c1;
 		} else {
-			if (!current->c0) {
-				return -1;
-			}
 			current = current->c0;
 		}
 	}

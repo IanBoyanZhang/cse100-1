@@ -24,7 +24,7 @@ int main(int argc, char* argv[])
 	std::string buffer((std::istreambuf_iterator<char>(ifs)),
 				(std::istreambuf_iterator<char>()));
 
-	// create a new file if we're trying to uncompress an empty file
+	// create an empty file if we're trying to uncompress an empty file
 	if (!buffer.size()) {
 		std::ofstream ofs(argv[2], std::ios::binary);
 		exit(0);

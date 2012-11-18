@@ -5,15 +5,12 @@
 #include <cstdlib>
 #include "HCTree.hpp"
 
-// creates the header used for the uncompress program with the following format:
+// creates the header used to rebuild the tree with the following format:
 /*
-	# HCT
 	char freq char freq ... char freq
-	# END
 */
 void makeHeader(std::ostream &out, std::vector<int> freqs)
 {
-	out << "# HCT" << std::endl;
 	for (size_t i = 0; i < freqs.size(); ++i) {
 		if (freqs[i]) {
 			out << i << " " << freqs[i] << " ";

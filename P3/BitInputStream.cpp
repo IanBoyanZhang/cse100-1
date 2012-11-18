@@ -3,12 +3,6 @@
 
 BitInputStream::BitInputStream(std::istream &in) : in(in), index(0), header(), good(true), size(0)
 {
-	std::string line;
-	std::getline(in, line);
-	if (line != "# HCT") {
-		std::cout << "!!! This is not a compressed file !!!" << std::endl;
-	}
-
 	std::getline(in, header);
 
 	// copy the contents of the file to a string
