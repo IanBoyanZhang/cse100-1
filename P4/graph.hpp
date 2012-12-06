@@ -1,5 +1,6 @@
 #include <list>
 #include <map>
+#include <unordered_map>
 #include <string>
 
 typedef std::string Vertex;
@@ -33,8 +34,8 @@ struct EdgeTimeCompare
 };
 
 typedef std::list<Edge> EdgeList;
-typedef std::map<Vertex, EdgeList> AdjacencyMap;
-typedef std::map<Vertex, int> DistanceMap;
+typedef std::unordered_map<Vertex, EdgeList> AdjacencyMap;
+typedef std::unordered_map<Vertex, int> DistanceMap;
 
 class Graph
 {
