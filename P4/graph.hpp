@@ -45,13 +45,13 @@ class Graph
 		void add(Vertex from, Vertex dest, int cost, int time);
 
 		// find the total cost of the edges in the graph
-		int totalCost();
+		unsigned long totalCost();
 
 		// find the total time it takes to send a packet between all computers
-		int time();
+		unsigned long time();
 
 		// find the time it takes to send a packet to all computers strating from a specific computer
-		int time(Vertex current);
+		unsigned long time(Vertex current);
 
 		// find the minimum spanning tree of the graph
 		Graph mst();

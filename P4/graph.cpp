@@ -37,7 +37,7 @@ void Graph::add(Vertex from, Vertex dest, int cost, int time)
 	this->cost += cost;
 }
 
-int Graph::totalCost()
+unsigned long Graph::totalCost()
 {
 	return cost;
 }
@@ -82,7 +82,7 @@ Graph Graph::mst()
 	return result;
 }
 
-int Graph::time()
+unsigned long Graph::time()
 {
 	int result = 0;
 	
@@ -94,7 +94,7 @@ int Graph::time()
 	return result;
 }
 
-int Graph::time(Vertex current)
+unsigned long Graph::time(Vertex current)
 {
 	typedef std::map<Vertex, int> DistanceMap;
 	DistanceMap distances;	// keeps track of the minimum distances
