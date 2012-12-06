@@ -1,18 +1,39 @@
 #include <list>
 #include <map>
 #include <string>
-#include <vector>
+
+typedef std::string Vertex;
 
 struct Edge
 {
-	Edge(std::string dest, int cost);
+	// initialize the edge
+	Edge(Vertex from, Vertex dest, int cost, int time);
 
-	const std::string dest;
-	const int cost;
+	// used to print the edge
+	friend std::ostream &operator<<(std::ostream &os, const Edge &e);
+
+	const Vertex from;	// where the edge comes from
+	const Vertex dest;	// where the edge points to
+	const int cost;	// the cost of the edge
+	const int time;	// the time it takes to transfer through this edge
+};
+
+struct EdgeCostCompare
+{
+	bool operator()(const Edge &e1, const Edge &e2) {
+		return e1.cost < e2.cost;
+	}
+};
+
+struct EdgeTimeCompare
+{
+	bool operator()(const Edge &e1, const Edge &e2) {
+		return e1.time < e2.time;
+	}
 };
 
 typedef std::list<Edge> EdgeList;
-typedef std::map<std::string, EdgeList> AdjacencyMap;
+typedef std::map<Vertex, EdgeList> AdjacencyMap;
 
 class Graph
 {
@@ -20,18 +41,23 @@ class Graph
 		Graph();
 
 		// add an edge to the graph
-		void add(std::string from, std::string dest, int cost);
+		void add(Edge e);
+		void add(Vertex from, Vertex dest, int cost, int time);
 
 		// find the total cost of the edges in the graph
 		int totalCost();
 
-		// find the minimum cost that connects the graph
-		int minimumCost();
+		// find the total time it takes to send a packet between all computers
+		int time();
 
-		// for debugging, prints the edges in the graph
-		void print();
+		// find the time it takes to send a packet to all computers strating from a specific computer
+		int time(Vertex current);
 
-		 AdjacencyMap graph;
+		// find the minimum spanning tree of the graph
+		Graph mst();
+
+
+		AdjacencyMap graph;
 
 	private:
 		int cost;

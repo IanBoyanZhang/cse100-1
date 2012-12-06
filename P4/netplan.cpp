@@ -14,12 +14,17 @@ int main(int argc, char* argv[])
 		if (!ifs.good()) {
 			break;
 		}
-		g.add(m1, m2, cost);
+		g.add(m1, m2, cost, time);
 	}
 
 	std::cout << g.totalCost() << std::endl;
-	g.print();
-	std::cout << g.minimumCost() << std::endl;
+	Graph mst = g.mst();
+	std::cout << mst.totalCost() << std::endl;
+	std::cout << g.totalCost() - mst.totalCost() << std::endl;
+
+	std::cout << g.time() << std::endl;
+	std::cout << mst.time() << std::endl;
+	std::cout << mst.time() - g.time() << std::endl;
 
 	return 0;
 }
