@@ -1,7 +1,7 @@
 #include <set>
 #include <vector>
 
-template <class T, class Compare = std::less<T>>
+template <class T, class Compare = std::less<T> >
 class DisjointSets
 {
 	public:
@@ -34,5 +34,6 @@ class DisjointSets
 			sets.erase(sets.begin() + s2);
 		}
 
-	std::vector<std::set<T, Compare> > sets;
+	private:
+		std::vector<std::set<T, Compare> > sets;
 };

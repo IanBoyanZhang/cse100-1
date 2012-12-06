@@ -34,6 +34,7 @@ struct EdgeTimeCompare
 
 typedef std::list<Edge> EdgeList;
 typedef std::map<Vertex, EdgeList> AdjacencyMap;
+typedef std::map<Vertex, int> DistanceMap;
 
 class Graph
 {
@@ -51,11 +52,10 @@ class Graph
 		unsigned long time();
 
 		// find the time it takes to send a packet to all computers strating from a specific computer
-		unsigned long time(Vertex current);
+		int time(Vertex current);
 
 		// find the minimum spanning tree of the graph
 		Graph mst();
-
 
 		AdjacencyMap graph;
 

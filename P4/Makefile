@@ -1,5 +1,5 @@
 CC=g++
-CXXFLAGS=-g -pg -Wall -std=c++0x
+CXXFLAGS=-g -pg -Wall
 LDFLAGS=-g
 
 all: netplan

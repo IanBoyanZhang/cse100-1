@@ -94,18 +94,19 @@ unsigned long Graph::time()
 	return result;
 }
 
-unsigned long Graph::time(Vertex current)
+int Graph::time(Vertex current)
 {
-	typedef std::map<Vertex, int> DistanceMap;
+	const int infinity = std::numeric_limits<int>::max();
 	DistanceMap distances;	// keeps track of the minimum distances
 	std::set<std::pair<int, Vertex> > queue;	// a set keeps the distances sorted
 
 	// Dijkstra's algorithm
 
+	
 	// set initial distances to infinity
 	AdjacencyMap::iterator amit;
 	for (amit = graph.begin(); amit != graph.end(); ++amit) {
-		distances[amit->first] = std::numeric_limits<int>::max();
+		distances[amit->first] = infinity;
 	}
 
 	// set the distane of the first vertex to 0
@@ -119,14 +120,15 @@ unsigned long Graph::time(Vertex current)
 		Vertex v = queue.begin()->second;
 		queue.erase(queue.begin());
 
-		const EdgeList &edges = graph.find(v)->second;
+		const EdgeList &edges = graph[v];
 		EdgeList::const_iterator elit;
 		for (elit = edges.begin(); elit != edges.end(); ++elit) {
-			Vertex dest = elit->dest;
+			const Vertex &dest = elit->dest;
 			int time = elit->time + distances[v];	// the total cost of going to this new vertex
 
 			// store the shortest distance and queue the vertex
 			if (time < distances[dest]) {
+				queue.erase(std::make_pair(time, dest));
 				distances[dest] = time;
 				queue.insert(std::make_pair(time, dest));
 			}

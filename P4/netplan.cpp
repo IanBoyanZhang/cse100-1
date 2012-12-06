@@ -19,15 +19,17 @@ int main(int argc, char* argv[])
 
 	Graph mst = g.mst();
 	unsigned long gCost = g.totalCost(), mstCost = mst.totalCost();
-	unsigned long gTime = g.time(), mstTime = mst.time();
 
 	std::cout << gCost << std::endl;
 	std::cout << mstCost << std::endl;
 	std::cout << gCost - mstCost << std::endl;
 
+	unsigned long gTime = g.time(), mstTime = mst.time();
 	std::cout << gTime << std::endl;
 	std::cout << mstTime << std::endl;
 	std::cout << mstTime - gTime << std::endl;
+	/*
+	*/
 
 	return 0;
 }
